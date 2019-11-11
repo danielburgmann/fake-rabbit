@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Log</title>
+    <link rel="icon" th:href="@{./favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{./style.css}" type="text/css" />
+</head>
+<body>
+    <p><a href="./index.html">home</a></p>
+    <p>
+        This page creates a log message in the spring boot apps logs.
+    </p>
+    <form method="get" action="./log.html">
+        <fieldset>
+            <legend>Send log message</legend>
+            <p><label for="level">level</label>
+                <select id="level" name="level">
+                    <!--/*@thymesVar id="logLevels" type="de.db8.os.sample.fakerabbit.log.LogEntry.LogLevel"*/-->
+                    <!--/*@thymesVar id="logEntry" type="de.db8.os.sample.fakerabbit.log.LogEntry"*/-->
+                    <option th:each="level : ${logLevels}"
+                            th:value="${level}"
+                            th:text="${level}"
+                            th:selected="${level == logEntry.level}"></option>
+                </select></p>
+            <p><label for="message">message</label>
+                <!--/*@thymesVar id="logEntry" type="de.db8.os.sample.fakerabbit.log.LogEntry"*/-->
+                <input type="text" id="message" name="message" title="message" th:value="${logEntry.message}"/></p>
+            <p><button>send</button></p>
+        </fieldset>
+    </form>
+
+    <fieldset>
+        <legend>last log message</legend>
+        <!--/*@thymesVar id="logEntry" type="de.db8.os.sample.fakerabbit.log.LogEntry"*/-->
+        <p><strong th:text="${logEntry.level}"></strong>: <span th:text="${logEntry.message}"></span></p>
+    </fieldset>
+</body>
+</html>

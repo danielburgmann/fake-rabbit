@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Fake rabbit</title>
+    <link rel="icon" th:href="@{./favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{./style.css}" type="text/css" />
+</head>
+<body>
+<h1>The fake rabbit</h1>
+<img alt="the fake rabbit" title="the fake rabbit" th:src="@{./images/fake-rabbit.png}"/>
+<p>A small app useful for testing and demonstrating scenarios in container environments.</p>
+<ul>
+    <li><a href="./hello.html">hello</a></li>
+    <li><a href="./env.html">env</a></li>
+    <li><a href="./log.html">log</a></li>
+    <li><a href="./config.html">config</a></li>
+    <li><a href="./buildInfo">buildInfo (JSON)</a></li>
+</ul>
+</body>
+</html>

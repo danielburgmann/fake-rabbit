@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fake-rabbit-config
+  labels:
+    app.kubernetes.io/name: fake-rabbit
+data:
+  configFile: |-
+    message=Hello from container local config!

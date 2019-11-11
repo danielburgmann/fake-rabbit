@@ -1,0 +1,56 @@
+//noinspection GroovyAssignabilityCheck
+task generateBuildInfo(
+        description: 'Generates the build info file which will packaged besides.',
+        group: 'Utility'
+) {
+    def buildInfoFile = new File(generatedResourcesDir, 'build-info.properties')
+
+    outputs.file(buildInfoFile)
+
+    doLast {
+
+        def commit
+        def branch
+        try {
+            commit = grgit.head()
+            branch = grgit.branch.current()
+        }
+        catch(NullPointerException ignored) {
+            logger.error 'generateBuildInfo : grgit could not retrieve current HEAD. (Maybe https://github.com/ajoberstar/grgit/issues/298). Will use placeholders.'
+            commit = [id: 'git-commit-id-not-available']
+            branch = [name: 'git-branch-not-available']
+        }
+
+        def sysProp = System.properties
+
+        def buildInfo = [
+            'branch': branch.name,
+            'commit.id': commit.id,
+            'version': project.version,
+            'build.user': System.env.USER,
+            'build.hostname': InetAddress.getLocalHost().getHostName(),
+            'build.date': new Date().format('yyyy-MM-dd HH:mm:ss,SSS Z'),
+            'build.os.name': sysProp.'os.name',
+            'build.os.version': sysProp.'os.version',
+            'build.java.vendor': sysProp.'java.vendor',
+            'build.java.version': sysProp.'java.version'
+        ]
+
+        def loggableBuildInfo = buildInfo.keySet().sort().collect { key ->
+                "    $key : ${buildInfo[key]}"
+        }.join('\n')
+        logger.info "Build information:\n$loggableBuildInfo"
+
+        def buildProps = new Properties()
+        buildProps.putAll(buildInfo)
+
+        // generate output dir if not already available
+        generatedResourcesDir.mkdirs()
+
+        logger.info "Storing build information to ${buildInfoFile.absolutePath}"
+        buildProps.store(buildInfoFile.newWriter(), "Build info for ${project.name}")
+    }
+}
+
+// add generated build info to source sets
+sourceSets.main.output.dir generatedResourcesDir, builtBy: generateBuildInfo

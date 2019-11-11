@@ -1,0 +1,55 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.1.RELEASE'
+		glowrootVersion = '0.13.5'
+
+		generatedResourcesDir = file("$buildDir/generated-resources")
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath(group: 'org.springframework.boot', name:'spring-boot-gradle-plugin', version:springBootVersion)
+	}
+}
+
+plugins {
+	id 'org.ajoberstar.grgit' version '3.1.1'
+	id 'com.palantir.docker' version '0.21.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+apply from: 'gradle/build-info.gradle'
+
+group = 'de.db8.os.sample'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_10
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	docker "org.glowroot:glowroot-agent:${glowrootVersion}"
+}
+
+task copyDockerDependencies(type: Copy) {
+	into "$buildDir/output/docker-libs"
+	from configurations.docker
+}
+
+docker {
+	name 'fake-rabbit:latest'
+	dockerfile file("${projectDir}/docker/Dockerfile")
+	files tasks.bootJar.outputs, tasks.copyDockerDependencies.outputs
+}

@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: fake-rabbit-deploy
+  labels:
+    app.kubernetes.io/name: fake-rabbit
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fake-rabbit
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fake-rabbit
+    spec:
+      containers:
+        - name: fake-rabbit
+          image: "db8os/fake-rabbit:latest"
+          imagePullPolicy: Always
+          command:
+            - /bin/bash
+          args:
+            - "-c"
+            - >-
+                java
+                -Dglowroot.agent.id=dev::dbn-test::fake-rabbit::${HOSTNAME}
+                -Dglowroot.collector.address=http://glowroot-collector.glowroot:8181
+                -javaagent:/usr/local/glowroot/glowroot-agent.jar
+                -jar
+                /usr/local/fake-rabbit/fake-rabbit.jar
+          ports:
+            - name: http-alt
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /hello.txt?name=OK
+              port: http-alt
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /hello.txt?name=OK
+              port: http-alt
+            initialDelaySeconds: 60
+          env:
+            - name: FAKE_RABBIT_CONFIG
+              value: /etc/fake-rabbit/fake-rabbit.conf
+          volumeMounts:
+            - mountPath: /etc/fake-rabbit
+              name: config-file
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 1536Mi
+      volumes:
+        - name: config-file
+          configMap:
+            name: fake-rabbit-config
+            items:
+              - key: configFile
+                path: fake-rabbit.conf

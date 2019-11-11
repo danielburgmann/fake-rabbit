@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Hello World</title>
+    <link rel="icon" th:href="@{./favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{./style.css}" type="text/css" />
+</head>
+<!--/*@thymesVar id="color" type="java.lang.String"*/-->
+<body th:attr="style='background-color: ' + ${color}">
+    <p><a href="./index.html">home</a></p>
+    <!--/*@thymesVar id="hello" type="de.db8.os.sample.fakerabbit.hello.Hello"*/-->
+    <p><strong th:text="${hello.message}"></strong></p>
+    <p>
+        This simple hello page allows to set GET parameters <em>name</em> and <em>color</em>. Just try it!
+    </p>
+    <form method="get" action="hello.html">
+        <fieldset>
+            <legend>Say hello</legend>
+            <p><label for="name">name</label><input type="text" id="name" name="name" title="name"  value="Ann"/></p>
+            <p><label for="color">color</label><input type="color" id="color" name="color" title="color" value="#ccffcc"/></p>
+            <p><button>as HTML</button></p>
+        </fieldset>
+    </form>
+    <form method="get" action="hello.json">
+        <fieldset>
+            <legend>Try it as json</legend>
+            <p><label for="json-name">name</label><input type="text" id="json-name" name="name" title="name" value="Bob"/></p>
+            <p><button>as JSON</button></p>
+        </fieldset>
+    </form>
+    <form method="get" action="hello.txt">
+        <fieldset>
+            <legend>Try it as plain text</legend>
+            <p><label for="text-name">name</label> <input type="text" id="text-name" name="name" title="name" value="Carla"/></p>
+            <p><button>as TXT</button></p>
+        </fieldset>
+    </form>
+</body>
+</html>

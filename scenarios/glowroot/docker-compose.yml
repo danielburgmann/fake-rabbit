@@ -1,0 +1,14 @@
+# docker-compose.yml
+version: '2'
+
+services:
+  cassandra:
+    image: cassandra:3.11.3
+    ports:
+      - "7199:7199"
+      - "9042:9042"
+  glowroot:
+    image: glowroot/glowroot-central:0.13.0
+    ports:
+      - "8181:8181"
+      - "4000:4000"

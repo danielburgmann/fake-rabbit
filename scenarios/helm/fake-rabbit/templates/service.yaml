@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "fake-rabbit.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "fake-rabbit.name" . }}
+    helm.sh/chart: {{ include "fake-rabbit.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+    # TODO: built switch for AWS loadbalancer into chart
+    # prometheus monitoring
+    # activate when spring boot actuator is on
+    #prometheus.io/scrape: 'true'
+    # use AWS elastic loadbalancer for this service (do not forget to disable ingress in values.yaml for this case)
+    # find more settings here:
+    # https://gist.github.com/mgoodness/1a2926f3b02d8e8149c224d25cc57dc1
+    # https://github.com/kubernetes/kubernetes/blob/master/pkg/cloudprovider/providers/aws/aws.go#L72
+    #service.beta.kubernetes.io/aws-load-balancer-type: "elb"
+    # service annotation to get external dns name with kubernetes external dns
+    external-dns.alpha.kubernetes.io/hostname: dbn-test-hello-ann.pit.sh, dbn-test-hello-bob.pit.sh
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-central-1:909435457203:certificate/67298861-22ac-45b5-b3f7-dcb4f4f8900b
+    # service.beta.kubernetes.io/aws-load-balancer-ssl-ports: {{ .Values.service.port }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http-alt
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "fake-rabbit.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fake-rabbit-svc
+  labels:
+    app: fake-rabbit
+    app.kubernetes.io/name: fake-rabbit
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: dbn-test.pit.sh
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-central-1:909435457203:certificate/dd3c1d65-c922-477c-b58f-494b8f77b647
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 443
+      targetPort: http-alt
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: fake-rabbit

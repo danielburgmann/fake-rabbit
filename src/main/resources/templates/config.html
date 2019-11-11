@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Config externalized</title>
+</head>
+<body>
+    <p><a href="./index.html">home</a></p>
+
+    <p>This page shows content from a config file given by the environment variable
+        <strong>FAKE_RABBIT_CONFIG</strong>. The file has to be in Java properties format, encoded in
+        <code>UTF-8</code> and should contain a key <code>message</code> with the message as a value.
+        <strong>FAKE_RABBIT_CONFIG</strong> may also point to a local file path.
+    </p>
+
+    <!--/*@thymesVar id="configLocation" type="java.lang.String>"*/-->
+    <p>config location: <strong th:text="${configLocation}"></strong></p>
+
+    <!--/*@thymesVar id="message" type="java.lang.String>"*/-->
+    <p>config.message: <strong th:text="${message}"></strong></p>
+</body>
+</html>

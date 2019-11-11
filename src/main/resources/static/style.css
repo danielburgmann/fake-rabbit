@@ -1,0 +1,51 @@
+body {
+    background-color: white;
+    font-family: 'DejaVu Sans Mono', monospace;
+}
+table, th, td {
+    border-collapse: collapse;
+    border: solid black 0.1em;
+}
+th, td {
+    text-align: left;
+    padding: 0.2em;
+}
+fieldset {
+    width: 36em;
+}
+label {
+    text-align: right;
+    width: 12em;
+    float: left;
+    vertical-align: bottom;
+}
+input {
+    height: 1.2em;
+    width: 20em;
+    float: left;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+}
+select {
+    height: 1.9em;
+    width: 20em;
+    float: left;
+    margin-left: 1em;
+    border-radius: 0;
+    margin-bottom: 0.5em;
+}
+button {
+    width: 20em;
+    margin-top: 0.7em;
+    margin-left: 18.3em;
+    margin-bottom: 1.0em;
+    float: left;
+}
+fieldset {
+    margin-bottom: 1.2em;
+}
+fieldset p {
+    clear: both;
+    padding: 0.05em;
+}
+

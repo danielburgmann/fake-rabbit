@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>hello-frontend</title>
+	<meta charset="utf-8"/>
+	<style type="text/css">
+		body {
+			background-color:black;
+			font-family: monospace;
+			color: lightgreen;
+		}
+		div#term {
+			margin-top: 20%;
+			margin-left: 20%;
+			padding: 1%;
+			height: 60%;
+			width: 60%;
+			border: solid 2px;
+		}
+	</style>
+	<script src="config.js"></script>
+	<script type="text/javascript">
+		// minimal js backend request inspired by https://stackoverflow.com/questions/247483/http-get-request-in-javascript
+		function httpGetAsync(theUrl, callback)
+		{
+			let xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() { 
+				if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
+					callback(xmlHttp.responseText);
+			};
+			xmlHttp.open("GET", theUrl, true); // true for asynchronous
+			xmlHttp.send(null);
+		}
+
+		function requestMessage()
+		{
+			let nameInput = document.getElementById("name");
+			let messageTag = document.getElementById("message");
+			messageTag.innerText = "Getting your message ...";
+			httpGetAsync(config.backendBaseUrl + "/hello.txt?name=" + nameInput.value,
+				function(message) {
+					document.getElementById("message").innerText = message;
+				}
+			);
+		}
+		
+	</script>
+</head>
+<body>
+	<div id="term">
+		<p>Let me know your <label for="name">name</label>: <input id="name" type="text" title="name" value="you"/><button onclick="requestMessage()">Get message</button></p>
+		<p>message:</p>
+		<p id="message">hello-frontend</p>
+	</div>
+</body>
+</html> 		

@@ -1,0 +1,32 @@
+# Default values for fake-rabbit
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: db8os/fake-rabbit
+  tag: latest
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  # service properties for nginx ingress
+  #type: ClusterIP
+  #port: 8080
+  # service properties for AWS ELB
+  type: LoadBalancer
+  port: 443
+
+ingress:
+   # set "enabled" to false if you use AWS ELB (see service.yaml) else true and service.type = ClusterIP
+  enabled: false
+  annotations:
+    # these both annotations are specific for layer 7 load balancing with nginx.
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  path: /hello # rewrite path on nginx
+  hosts:
+    - apps.dev.pit.sh

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fake-rabbit-config
+  labels:
+    app.kubernetes.io/name: {{ include "fake-rabbit.name" . }}
+    helm.sh/chart: {{ include "fake-rabbit.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  configFile: |-
+    message=Hello from container local config!
