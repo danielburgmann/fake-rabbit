@@ -16,6 +16,7 @@ public class ConfigController {
         this.configService = configService;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @RequestMapping(value = {"/config", "/config.html"}, method = RequestMethod.GET)
     public String displayConfig(Model model) {
         String message = configService.getConfigMessage();

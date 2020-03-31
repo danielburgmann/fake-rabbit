@@ -76,12 +76,12 @@ public class EnvController {
         Map<String, List<String>> map = new TreeMap<>();
 
         try {
-            for (Enumeration nics = NetworkInterface.getNetworkInterfaces(); nics.hasMoreElements(); ) {
-                NetworkInterface nic = (NetworkInterface) nics.nextElement();
+            for (Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces(); nics.hasMoreElements(); ) {
+                NetworkInterface nic = nics.nextElement();
 
                 List<String> ips = new LinkedList<>();
-                for (Enumeration addresses = nic.getInetAddresses(); addresses.hasMoreElements(); ) {
-                    InetAddress address = (InetAddress) addresses.nextElement();
+                for (Enumeration<InetAddress> addresses = nic.getInetAddresses(); addresses.hasMoreElements(); ) {
+                    InetAddress address = addresses.nextElement();
                     ips.add(address.toString());
                 }
 

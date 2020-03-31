@@ -83,6 +83,7 @@ class Config {
 
     // inspired by
     // https://stackoverflow.com/questions/4328711/read-url-to-string-in-few-lines-of-java-code?answertab=votes#tab-top
+    @SuppressWarnings("SameReturnValue")
     private boolean readFromStream(InputStream source) {
         Scanner scanner = new Scanner(source, UTF_8);
         scanner.useDelimiter("\\A");

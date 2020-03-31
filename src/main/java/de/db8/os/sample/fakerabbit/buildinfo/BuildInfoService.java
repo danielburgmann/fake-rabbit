@@ -18,10 +18,10 @@ public class BuildInfoService {
 
     private static final String BUILD_INFO_PATH_DEFAULT = "classpath:/build-info.properties";
 
-    private String buildInfoPath;
+    private final String buildInfoPath;
     private BuildInfo buildInfo;
 
-    private ResourceLoader resourceLoader;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
     public BuildInfoService(ResourceLoader resourceLoader) {

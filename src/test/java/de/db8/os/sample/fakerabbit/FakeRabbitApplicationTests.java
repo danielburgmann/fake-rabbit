@@ -9,6 +9,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class FakeRabbitApplicationTests {
 
+	/*
+	 * empty method to test if the application context in general loads
+	 */
+	@SuppressWarnings("EmptyMethod")
 	@Test
 	public void contextLoads() {
 	}
