@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>OpenFeign</title>
+    <link rel="icon" th:href="@{./favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{./style.css}" type="text/css" />
+</head>
+<body>
+    <p><a href="./index.html">home</a></p>
+    <p>
+        This simple page demonstrates the use of the OpenFeign endpoints, which use the OpenFeign
+        clients to request other services. Just try it!
+    </p>
+    <form method="get" action="/feign/hello">
+        <fieldset>
+            <legend>Say hello</legend>
+            <p><label for="name">name</label><input type="text" id="name" name="name" title="name"  value="Ann"/></p>
+            <p><button>call /feign/hello</button></p>
+        </fieldset>
+    </form>
+    <form method="get" action="/feign/github/contributors">
+        <fieldset>
+            <legend>Get github repo's contributors list</legend>
+            <p><label for="contributors_owner">owner</label><input type="text" id="contributors_owner" name="owner" title="owner" value="OpenFeign"/></p>
+            <p><label for="contributors_repo">repo</label><input type="text" id="contributors_repo" name="repo" title="repo" value="feign"/></p>
+            <p><button>call /feign/github/contributors</button></p>
+        </fieldset>
+    </form>
+    <form method="get" action="/feign/github/issues">
+        <fieldset>
+            <legend>Get github repo's issues</legend>
+            <p><label for="issues_owner">owner</label><input type="text" id="issues_owner" name="owner" title="owner" value="OpenFeign"/></p>
+            <p><label for="issues_repo">repo</label><input type="text" id="issues_repo" name="repo" title="repo" value="feign"/></p>
+            <p><button>call /feign/github/issues</button></p>
+        </fieldset>
+    </form>
+</body>
+</html>

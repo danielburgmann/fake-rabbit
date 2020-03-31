@@ -40,7 +40,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// APM scenario with glowroot
 	docker "org.glowroot:glowroot-agent:${glowrootVersion}"
+
+	// REST API client with OpenFeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.1.RELEASE'
+	implementation 'io.github.openfeign:feign-httpclient:10.8'
+
 }
 
 task copyDockerDependencies(type: Copy) {
