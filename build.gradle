@@ -1,7 +1,7 @@
 buildscript {
 	ext {
-		springBootVersion = '2.2.1.RELEASE'
-		glowrootVersion = '0.13.5'
+		springBootVersion = '2.3.4.RELEASE'
+		glowrootVersion = '0.13.6'
 
 		generatedResourcesDir = file("$buildDir/generated-resources")
 	}
@@ -14,8 +14,8 @@ buildscript {
 }
 
 plugins {
-	id 'org.ajoberstar.grgit' version '3.1.1'
-	id 'com.palantir.docker' version '0.21.0'
+	id 'org.ajoberstar.grgit' version '4.1.0'
+	id 'com.palantir.docker' version '0.25.0'
 }
 
 apply plugin: 'java'
@@ -28,7 +28,7 @@ apply from: 'gradle/build-info.gradle'
 
 group = 'de.db8.os.sample'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_1_10
+sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
@@ -44,8 +44,8 @@ dependencies {
 	docker "org.glowroot:glowroot-agent:${glowrootVersion}"
 
 	// REST API client with OpenFeign
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.1.RELEASE'
-	implementation 'io.github.openfeign:feign-httpclient:10.8'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.5.RELEASE'
+	implementation 'io.github.openfeign:feign-httpclient:11.0'
 
 }
 
