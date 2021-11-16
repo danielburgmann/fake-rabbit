@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.3.4.RELEASE'
+		springBootVersion = '2.5.6'
 		glowrootVersion = '0.13.6'
 
 		generatedResourcesDir = file("$buildDir/generated-resources")
@@ -44,8 +44,15 @@ dependencies {
 	docker "org.glowroot:glowroot-agent:${glowrootVersion}"
 
 	// REST API client with OpenFeign
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.5.RELEASE'
-	implementation 'io.github.openfeign:feign-httpclient:11.0'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.5'
+	implementation 'io.github.openfeign:feign-httpclient:11.7'
+
+	// fixing dependencies in dependency tree
+	constraints {
+		implementation('commons-io:commons-io:2.11.0') {
+			because 'version 2.2 pulled by org.springframework.cloud:spring-cloud-starter-openfeign:3.0.5 has security issues'
+		}
+	}
 
 }
 
